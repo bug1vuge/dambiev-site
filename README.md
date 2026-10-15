@@ -21,8 +21,7 @@ npm run preview    # посмотреть собранную версию
 
 | Что | Где в `content.ts` |
 |---|---|
-| Город (для SEO-заголовков) | `site.city`, `site.cityIn` |
-| Цифры «лет / праздников» | `about.facts` |
+| Основной город (сейчас Томск — первый в списке на слайдах, уточнить) | `site.city`, `site.cityIn`, `site.areas` |
 | Отзывы (сейчас образцы с пометкой) | `reviews` — уберите `placeholder: true` у реальных |
 | Ник в Telegram | `contacts.telegram` |
 | Домен сайта | переменная `VITE_SITE_URL` в `.env` |

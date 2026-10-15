@@ -41,43 +41,64 @@ export function initReveal(): () => void {
 
 /**
  * Параллакс: у элемента data-parallax="0.15" (скорость, может быть < 0)
- * обновляется CSS-переменная --py. Считаем только видимые элементы.
- * data-parallax-axis="x" — сдвиг по горизонтали (переменная --px).
+ * обновляется CSS-переменная --py (или --px при data-parallax-axis="x").
+ * Сдвиг не прыгает за каждым шагом колеса мыши, а плавно догоняет цель
+ * (интерполяция в requestAnimationFrame). Считаем только видимые элементы.
  */
 export function initParallax(): () => void {
   if (prefersReducedMotion() || !('IntersectionObserver' in window)) return () => undefined;
   const els = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
   const visible = new Set<HTMLElement>();
+  const current = new Map<HTMLElement, number>();
+  const EASE = 0.1;
+
+  const target = (el: HTMLElement, vh: number) => {
+    const speed = parseFloat(el.dataset.parallax ?? '0');
+    const host = el.parentElement ?? el;
+    const r = host.getBoundingClientRect();
+    return -(r.top + r.height / 2 - vh / 2) * speed;
+  };
+  const apply = (el: HTMLElement, v: number) => {
+    const prop = el.dataset.parallaxAxis === 'x' ? '--px' : '--py';
+    el.style.setProperty(prop, `${v.toFixed(2)}px`);
+  };
+
+  let raf = 0;
+  const tick = () => {
+    raf = 0;
+    const vh = window.innerHeight;
+    let moving = false;
+    visible.forEach((el) => {
+      const t = target(el, vh);
+      const c = current.get(el);
+      // Первое появление — ставим сразу, без «подъезда» из нуля
+      const next = c === undefined ? t : c + (t - c) * EASE;
+      const done = Math.abs(t - next) < 0.1;
+      current.set(el, done ? t : next);
+      apply(el, done ? t : next);
+      if (!done) moving = true;
+    });
+    if (moving) raf = requestAnimationFrame(tick);
+  };
+  const schedule = () => {
+    if (!raf) raf = requestAnimationFrame(tick);
+  };
+
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
         const el = e.target as HTMLElement;
         if (e.isIntersecting) visible.add(el);
-        else visible.delete(el);
+        else {
+          visible.delete(el);
+          current.delete(el);
+        }
       }
       schedule();
     },
-    { rootMargin: '20% 0px' },
+    { rootMargin: '25% 0px' },
   );
   els.forEach((el) => io.observe(el));
-
-  let raf = 0;
-  const update = () => {
-    raf = 0;
-    const vh = window.innerHeight;
-    visible.forEach((el) => {
-      const speed = parseFloat(el.dataset.parallax ?? '0');
-      const host = el.parentElement ?? el;
-      const r = host.getBoundingClientRect();
-      const center = r.top + r.height / 2 - vh / 2;
-      const value = -center * speed;
-      if (el.dataset.parallaxAxis === 'x') el.style.setProperty('--px', `${value.toFixed(1)}px`);
-      else el.style.setProperty('--py', `${value.toFixed(1)}px`);
-    });
-  };
-  const schedule = () => {
-    if (!raf) raf = requestAnimationFrame(update);
-  };
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', schedule, { passive: true });
   schedule();

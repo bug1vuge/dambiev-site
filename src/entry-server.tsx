@@ -58,7 +58,8 @@ export function head(): string {
       telephone: contacts.phone.replace(/[^\d+]/g, ''),
       url,
       founder: { '@id': `${url}#person` },
-      ...(site.city ? { areaServed: site.city, address: { '@type': 'PostalAddress', addressLocality: site.city, addressCountry: 'RU' } } : {}),
+      ...(site.city ? { address: { '@type': 'PostalAddress', addressLocality: site.city, addressCountry: 'RU' } } : {}),
+      areaServed: site.areas.map((name) => ({ '@type': 'Place', name })),
       serviceType: ['Ведущий на свадьбу', 'Ведущий на юбилей', 'Ведущий корпоратива', 'Ведущий выпускного'],
       sameAs,
       ...(realReviews.length

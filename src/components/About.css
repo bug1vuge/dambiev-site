@@ -152,9 +152,8 @@
     gap: 1rem;
   }
   .about__facts dd {
-    flex: none;
-    min-width: 3.6em;
-    font-size: 2.25rem;
+    flex: 0 0 8.75rem; /* одна колонка для всех цифр, включая «с 2016» — подписи стоят ровно */
+    font-size: 2rem;
   }
   .about__facts dt {
     font-size: 0.9375rem;

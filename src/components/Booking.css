@@ -152,7 +152,7 @@
   font-weight: 600;
 }
 
-.field input:not([type='radio']):not([type='checkbox']),
+.field input:not([type='radio']):not([type='checkbox']):not(.stepper__input),
 .field textarea,
 .select__button,
 .datepicker__button {
@@ -183,14 +183,14 @@
   color: rgba(20, 22, 63, 0.4);
 }
 
-.field input:hover,
+.field input:not(.stepper__input):hover,
 .field textarea:hover,
 .select__button:hover,
 .datepicker__button:hover {
   border-color: rgba(20, 22, 63, 0.32);
 }
 
-.field input:focus,
+.field input:not(.stepper__input):focus,
 .field textarea:focus,
 .select__button:focus-visible,
 .select.is-open .select__button,
@@ -201,7 +201,7 @@
   box-shadow: 0 0 0 4px rgba(255, 197, 61, 0.55);
 }
 
-.has-error input:not([type='checkbox']),
+.has-error input:not([type='checkbox']):not(.stepper__input),
 .has-error .select__button,
 .has-error .datepicker__button,
 .has-error textarea {

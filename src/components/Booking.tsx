@@ -17,6 +17,7 @@ import {
 import { InstagramIcon, PhoneIcon, TelegramIcon, VkIcon, WhatsAppIcon } from './Icons';
 import { DatePicker } from './DatePicker';
 import { Select } from './Select';
+import { Stepper } from './Stepper';
 import './Booking.css';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
@@ -311,15 +312,18 @@ export function Booking() {
 
                 <div className={`field${err('guests') ? ' has-error' : ''}`}>
                   <label htmlFor="lead-guests">Сколько гостей</label>
-                  <input
-                    {...fieldProps('guests')}
-                    type="number"
-                    inputMode="numeric"
+                  <Stepper
+                    id="lead-guests"
+                    name="guests"
+                    value={data.guests}
                     min={1}
                     max={5000}
-                    value={data.guests}
-                    onChange={onChange}
                     placeholder="50"
+                    unit="гостей"
+                    onChange={(v) => update('guests', v)}
+                    onBlur={() => onBlur({ target: { name: 'guests' } })}
+                    invalid={Boolean(err('guests'))}
+                    describedBy={err('guests') ? 'lead-guests-error' : undefined}
                   />
                   {errorText('guests')}
                 </div>

@@ -12,6 +12,14 @@
     "no-trailing-whitespace": "off",
     "tel-non-breaking": "off",
     "no-inline-style": "off",
-    "require-sri": "off"
+    "require-sri": "off",
+    "prefer-native-element": [
+      "error",
+      {
+        "exclude": [
+          "listbox"
+        ]
+      }
+    ]
   }
 }

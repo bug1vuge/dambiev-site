@@ -15,6 +15,7 @@ import {
   type LeadErrors,
 } from '../lib/validation';
 import { InstagramIcon, PhoneIcon, TelegramIcon, VkIcon, WhatsAppIcon } from './Icons';
+import { Select } from './Select';
 import './Booking.css';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
@@ -274,19 +275,21 @@ export function Booking() {
                 </div>
 
                 <div className={`field${err('eventType') ? ' has-error' : ''}`}>
-                  <label htmlFor="lead-eventType">Формат праздника *</label>
-                  <div className="field__select">
-                    <select {...fieldProps('eventType')} value={data.eventType} onChange={onChange} required>
-                      <option value="" disabled>
-                        Выберите формат
-                      </option>
-                      {eventTypes.map((t) => (
-                        <option key={t} value={t}>
-                          {t}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                  <label htmlFor="lead-eventType" id="lead-eventType-label">
+                    Формат праздника *
+                  </label>
+                  <Select
+                    id="lead-eventType"
+                    labelId="lead-eventType-label"
+                    name="eventType"
+                    value={data.eventType}
+                    options={eventTypes}
+                    placeholder="Выберите формат"
+                    onChange={(v) => update('eventType', v)}
+                    onBlur={() => onBlur({ target: { name: 'eventType' } })}
+                    invalid={Boolean(err('eventType'))}
+                    describedBy={err('eventType') ? 'lead-eventType-error' : undefined}
+                  />
                   {errorText('eventType')}
                 </div>
 

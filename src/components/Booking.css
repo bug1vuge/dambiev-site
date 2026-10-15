@@ -153,8 +153,8 @@
 }
 
 .field input:not([type='radio']):not([type='checkbox']),
-.field select,
-.field textarea {
+.field textarea,
+.select__button {
   width: 100%;
   min-height: 54px;
   padding: 0.85rem 1rem;
@@ -192,52 +192,22 @@
 }
 
 .field input:hover,
-.field select:hover,
-.field textarea:hover {
+.field textarea:hover,
+.select__button:hover {
   border-color: rgba(20, 22, 63, 0.32);
 }
 
 .field input:focus,
-.field select:focus,
-.field textarea:focus {
+.field textarea:focus,
+.select__button:focus-visible,
+.select.is-open .select__button {
   outline: none;
   border-color: var(--night-2);
   box-shadow: 0 0 0 4px rgba(255, 197, 61, 0.55);
 }
 
-.field__select {
-  position: relative;
-}
-
-.field__select::after {
-  content: '';
-  position: absolute;
-  right: 1.1rem;
-  top: 50%;
-  width: 9px;
-  height: 9px;
-  margin-top: -7px;
-  border-right: 2px solid var(--ink);
-  border-bottom: 2px solid var(--ink);
-  transform: rotate(45deg);
-  pointer-events: none;
-}
-
-.field__select select {
-  padding-right: 2.75rem;
-}
-
-.field__select select:invalid,
-.field__select select option[value=''] {
-  color: rgba(20, 22, 63, 0.45);
-}
-
-.field__select select option {
-  color: var(--ink);
-}
-
 .has-error input:not([type='checkbox']),
-.has-error select,
+.has-error .select__button,
 .has-error textarea {
   border-color: var(--error) !important;
 }

@@ -10,11 +10,10 @@ function Word({ text, offset }: { text: string; offset: number }) {
   return (
     <span className="hero__word">
       {Array.from(text).map((ch, i) => (
-        <span key={i} className="hero__letter" style={{ '--i': i + offset } as CSSProperties} aria-hidden="true">
+        <span key={i} className="hero__letter" style={{ '--i': i + offset } as CSSProperties}>
           <span className="hero__glyph">{ch}</span>
         </span>
       ))}
-      <span className="visually-hidden">{text}</span>
     </span>
   );
 }
@@ -126,9 +125,9 @@ export function Hero() {
         <div className="hero__copy">
           <h1 id="hero-title" className="hero__title">
             <span ref={nameRef} className="hero__name">
-              <Word text={person.firstName} offset={0} />
+              <Word text={person.firstName} offset={0} />{' '}
               <Word text={person.lastName} offset={person.firstName.length} />
-            </span>
+            </span>{' '}
             <span className="hero__role">
               ведущий свадеб, юбилеев и корпоративов{site.cityIn ? ` ${site.cityIn}` : ''}
             </span>

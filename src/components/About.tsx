@@ -1,0 +1,63 @@
+import type { CSSProperties } from 'react';
+import { about } from '../content';
+import { SparkIcon } from './Icons';
+import { Photo } from './Photo';
+import './About.css';
+
+export function About() {
+  return (
+    <section className="section section--butter about" id="about" aria-labelledby="about-title">
+      <div className="container about__grid">
+        <div className="about__media">
+          <div className="about__photo about__photo--main" data-reveal="curtain">
+            <div data-parallax="-0.06">
+              <Photo photo="portrait" sizes="(min-width: 1024px) 34vw, (min-width: 600px) 50vw, 80vw" />
+            </div>
+          </div>
+          <div className="about__photo about__photo--small" data-reveal="scale" style={{ '--delay': '0.25s' } as CSSProperties}>
+            <div data-parallax="0.12">
+              <Photo photo="mic" sizes="(min-width: 1024px) 18vw, 40vw" />
+            </div>
+          </div>
+          <p className="about__note" data-parallax="0.2">
+            Привет!
+            <br />
+            Будем знакомы
+          </p>
+        </div>
+
+        <div className="about__text">
+          <h2 id="about-title" data-reveal="up">
+            {about.title}
+          </h2>
+          {about.paragraphs.map((p, i) => (
+            <p key={i} className="about__p" data-reveal="up" style={{ '--delay': `${0.1 + i * 0.1}s` } as CSSProperties}>
+              {p}
+            </p>
+          ))}
+
+          <ul className="about__traits">
+            {about.traits.map((t, i) => (
+              <li key={t.title} data-reveal="left" style={{ '--delay': `${0.1 + i * 0.12}s` } as CSSProperties}>
+                <SparkIcon />
+                <div>
+                  <h3>{t.title}</h3>
+                  <p>{t.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <dl className="about__facts" data-reveal="up">
+            {about.facts.map((f) => (
+              <div key={f.label}>
+                <dt>{f.label}</dt>
+                <dd>{f.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </section>
+  );
+}

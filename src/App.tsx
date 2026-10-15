@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { About } from './components/About';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Marquee } from './components/Marquee';
@@ -19,6 +20,7 @@ export function App() {
       <main id="main">
         <Hero />
         <Marquee />
+        <About />
       </main>
       <MobileBar />
     </>

@@ -1,0 +1,147 @@
+.about {
+  padding-top: calc(var(--section-y) + 2rem);
+  overflow: hidden;
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: center;
+}
+
+.about__media {
+  position: relative;
+  padding: 0 12% 18% 0;
+}
+
+.about__photo {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.about__photo .photo {
+  transform: scale(1.12);
+}
+
+.about__photo--main {
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) 160px;
+}
+
+.about__photo--small {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 46%;
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 8px var(--butter),
+    0 30px 60px -25px rgba(20, 22, 63, 0.5);
+}
+
+.about__note {
+  position: absolute;
+  left: -0.5rem;
+  top: 8%;
+  padding: 0.85rem 1.2rem;
+  border-radius: 18px 18px 18px 4px;
+  background: var(--rose);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.3rem);
+  line-height: 1.15;
+  rotate: -6deg;
+  box-shadow: 0 16px 30px -16px rgba(20, 22, 63, 0.6);
+}
+
+.about__text h2 {
+  margin-bottom: 1.75rem;
+}
+
+.about__p {
+  max-width: 38rem;
+  font-size: var(--fs-lead);
+  color: var(--ink-muted);
+}
+
+.about__p + .about__p {
+  margin-top: 1rem;
+}
+
+.about__traits {
+  display: grid;
+  gap: 1.25rem;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about__traits li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.about__traits svg {
+  width: 30px;
+  height: 30px;
+  color: var(--rose);
+  margin-top: 2px;
+}
+
+.about__traits h3 {
+  margin-bottom: 0.2rem;
+}
+
+.about__traits p {
+  color: var(--ink-muted);
+}
+
+.about__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 2.75rem 0 0;
+  padding-top: 2rem;
+  border-top: 2px solid rgba(20, 22, 63, 0.14);
+}
+
+.about__facts div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.35rem;
+}
+
+.about__facts dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  line-height: 1;
+}
+
+.about__facts dt {
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+  line-height: 1.35;
+}
+
+@media (max-width: 1023px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+  }
+  .about__media {
+    max-width: 520px;
+    margin-inline: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 479px) {
+  .about__facts {
+    gap: 0.6rem;
+  }
+  .about__facts dt {
+    font-size: 0.8125rem;
+  }
+}

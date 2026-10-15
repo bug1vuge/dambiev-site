@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { faq } from '../content';
+import { faq, sections } from '../content';
 import './Faq.css';
 
 export function Faq() {
@@ -8,10 +8,10 @@ export function Faq() {
       <div className="container faq__grid">
         <div className="section-head">
           <h2 id="faq-title" data-reveal="up">
-            Частые вопросы
+            {sections.faq.title}
           </h2>
           <p data-reveal="up" style={{ '--delay': '0.1s' } as CSSProperties}>
-            Не нашли ответ? Спросите в WhatsApp — отвечу лично.
+            {sections.faq.lead}
           </p>
         </div>
         <div className="faq__list">

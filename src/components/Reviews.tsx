@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
-import { contacts, reviews, site } from '../content';
+import { contacts, reviews, sections, site } from '../content';
 import { prefersReducedMotion } from '../lib/motion';
 import { ArrowIcon, InstagramIcon } from './Icons';
 import './Reviews.css';
@@ -92,10 +92,10 @@ export function Reviews() {
         <div className="reviews__head">
           <div className="section-head">
             <h2 id="reviews-title" data-reveal="up">
-              Что говорят после праздника
+              {sections.reviews.title}
             </h2>
             <p data-reveal="up" style={{ '--delay': '0.1s' } as CSSProperties}>
-              Больше отзывов и видео с мероприятий — в моём Instagram.
+              {sections.reviews.lead}
             </p>
           </div>
           <div className="reviews__controls" data-reveal="up">

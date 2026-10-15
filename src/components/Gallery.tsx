@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import type { PhotoKey } from '../content';
+import { sections, type PhotoKey } from '../content';
 import { Photo } from './Photo';
 import './Gallery.css';
 
@@ -25,10 +25,10 @@ export function Gallery() {
       <div className="container">
         <div className="section-head">
           <h2 id="gallery-title" data-reveal="up">
-            Так выглядят мои вечера
+            {sections.gallery.title}
           </h2>
           <p data-reveal="up" style={{ '--delay': '0.1s' } as CSSProperties}>
-            Живые эмоции, полный танцпол и гости, которые не хотят расходиться.
+            {sections.gallery.lead}
           </p>
         </div>
       </div>

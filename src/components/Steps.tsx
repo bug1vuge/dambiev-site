@@ -1,5 +1,5 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
-import { steps } from '../content';
+import { sections, steps } from '../content';
 import './Steps.css';
 
 export function Steps() {
@@ -38,10 +38,10 @@ export function Steps() {
       <div className="container">
         <div className="section-head">
           <h2 id="process-title" data-reveal="up">
-            Пять шагов до вашего праздника
+            {sections.steps.title}
           </h2>
           <p data-reveal="up" style={{ '--delay': '0.1s' } as CSSProperties}>
-            Всё прозрачно с первого сообщения: вы знаете, что происходит и что будет дальше.
+            {sections.steps.lead}
           </p>
         </div>
 

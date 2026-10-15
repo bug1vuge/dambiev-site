@@ -1,4 +1,4 @@
-import { contacts, person } from '../content';
+import { contacts, person, sections } from '../content';
 import { InstagramIcon, PhoneIcon, SparkIcon, TelegramIcon, VkIcon, WhatsAppIcon } from './Icons';
 import { NAV } from './Header';
 import './Footer.css';
@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="footer">
       <div className="container">
         <a className="footer__cta" href="#booking">
-          <span className="footer__cta-text">Давайте сделаем ваш праздник незабываемым</span>
+          <span className="footer__cta-text">{sections.footer.cta}</span>
           <span className="footer__cta-btn btn">Забронировать дату</span>
         </a>
 

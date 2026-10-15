@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { formats } from '../content';
+import { formats, sections } from '../content';
 import { isFinePointer, prefersReducedMotion } from '../lib/motion';
 import { ArrowIcon } from './Icons';
 import { Photo } from './Photo';
@@ -83,10 +83,10 @@ export function Formats() {
       <div className="container">
         <div className="section-head">
           <h2 id="formats-title" data-reveal="up">
-            Какие праздники я веду
+            {sections.formats.title}
           </h2>
           <p data-reveal="up" style={{ '--delay': '0.1s' } as CSSProperties}>
-            Каждый формат — со своим сценарием, музыкой и настроением. Выберите свой, а детали обсудим на встрече.
+            {sections.formats.lead}
           </p>
         </div>
 

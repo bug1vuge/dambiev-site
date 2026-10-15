@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { benefits } from '../content';
+import { benefits, sections } from '../content';
 import './Benefits.css';
 
 export function Benefits() {
@@ -8,10 +8,10 @@ export function Benefits() {
       <div className="container">
         <div className="section-head">
           <h2 id="benefits-title" data-reveal="up">
-            Весело гостям, спокойно вам
+            {sections.benefits.title}
           </h2>
           <p data-reveal="up" style={{ '--delay': '0.1s' } as CSSProperties}>
-            Лёгкость на празднике — это результат подготовки. Вот за что меня рекомендуют друзьям.
+            {sections.benefits.lead}
           </p>
         </div>
         <ul className="benefits__grid">

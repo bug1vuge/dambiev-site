@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
-import { contacts, eventTypes } from '../content';
+import { contacts, eventTypes, sections } from '../content';
 import { burstConfetti } from '../lib/motion';
 import { sendLead } from '../lib/sendLead';
 import {
@@ -170,10 +170,10 @@ export function Booking() {
       <div className="container booking__grid">
         <div className="booking__intro" id="contacts">
           <h2 id="booking-title" data-reveal="up">
-            Свободна ли ваша дата?
+            {sections.booking.title}
           </h2>
           <p className="booking__lead" data-reveal="up">
-            Оставьте заявку, и я отвечу в тот же день: проверю календарь, задам пару вопросов и расскажу, каким может быть ваш праздник.
+            {sections.booking.lead}
           </p>
 
           <ul className="booking__contacts" data-reveal="up">

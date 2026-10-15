@@ -20,9 +20,9 @@ export function About() {
             </div>
           </div>
           <p className="about__note" data-parallax="0.2">
-            Привет!
+            {about.note[0]}
             <br />
-            Будем знакомы
+            {about.note[1]}
           </p>
         </div>
 

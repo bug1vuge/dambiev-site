@@ -129,7 +129,8 @@ export function Hero() {
               <Word text={person.lastName} offset={person.firstName.length} />
             </span>{' '}
             <span className="hero__role">
-              ведущий свадеб, юбилеев и корпоративов{site.cityIn ? ` ${site.cityIn}` : ''}
+              {hero.role}
+              {site.cityIn ? ` ${site.cityIn}` : ''}
             </span>
           </h1>
 
@@ -147,7 +148,7 @@ export function Hero() {
           </div>
 
           <a className="hero__phone" href={contacts.phoneHref}>
-            <span className="hero__phone-label">Звоните, отвечу лично</span>
+            <span className="hero__phone-label">{hero.phoneLabel}</span>
             <span className="hero__phone-number">{contacts.phone}</span>
           </a>
         </div>
@@ -162,7 +163,7 @@ export function Hero() {
               <circle cx="100" cy="100" r="98" className="hero__badge-bg" />
               <text>
                 <textPath href="#badge-circle" startOffset="0">
-                  поёт ✦ танцует ✦ ведёт ✦ зажигает ✦
+                  {hero.badge}
                 </textPath>
               </text>
               <path

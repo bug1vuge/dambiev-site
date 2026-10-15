@@ -154,7 +154,8 @@
 
 .field input:not([type='radio']):not([type='checkbox']),
 .field textarea,
-.select__button {
+.select__button,
+.datepicker__button {
   width: 100%;
   min-height: 54px;
   padding: 0.85rem 1rem;
@@ -172,15 +173,6 @@
     box-shadow 0.25s;
 }
 
-.field input[type='date'] {
-  display: block;
-  min-width: 0;
-}
-
-.field input[type='date']::-webkit-date-and-time-value {
-  text-align: left;
-}
-
 .field textarea {
   min-height: 104px;
   resize: vertical;
@@ -193,14 +185,17 @@
 
 .field input:hover,
 .field textarea:hover,
-.select__button:hover {
+.select__button:hover,
+.datepicker__button:hover {
   border-color: rgba(20, 22, 63, 0.32);
 }
 
 .field input:focus,
 .field textarea:focus,
 .select__button:focus-visible,
-.select.is-open .select__button {
+.select.is-open .select__button,
+.datepicker__button:focus-visible,
+.datepicker.is-open .datepicker__button {
   outline: none;
   border-color: var(--night-2);
   box-shadow: 0 0 0 4px rgba(255, 197, 61, 0.55);
@@ -208,6 +203,7 @@
 
 .has-error input:not([type='checkbox']),
 .has-error .select__button,
+.has-error .datepicker__button,
 .has-error textarea {
   border-color: var(--error) !important;
 }

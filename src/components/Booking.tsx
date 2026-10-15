@@ -15,6 +15,7 @@ import {
   type LeadErrors,
 } from '../lib/validation';
 import { InstagramIcon, PhoneIcon, TelegramIcon, VkIcon, WhatsAppIcon } from './Icons';
+import { DatePicker } from './DatePicker';
 import { Select } from './Select';
 import './Booking.css';
 
@@ -48,17 +49,14 @@ export function Booking() {
   const [touched, setTouched] = useState<Partial<Record<keyof LeadData, boolean>>>({});
   const [status, setStatus] = useState<Status>('idle');
   const [serverMsg, setServerMsg] = useState('');
-  const [minDate, setMinDate] = useState<string | undefined>(undefined);
   const formRef = useRef<HTMLFormElement>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
 
-  // Черновик, минимальная дата и выбор формата из списка «Какие праздники я веду»
+  // Черновик и выбор формата из списка «Какие праздники я веду»
   useEffect(() => {
     const draft = loadDraft();
     if (Object.keys(draft).length) setData((d) => ({ ...d, ...draft, consent: false, website: '' }));
-    const now = new Date();
-    setMinDate(new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10));
     const onPick = (e: Event) => {
       const v = (e as CustomEvent<string>).detail;
       if (eventTypes.includes(v)) setData((d) => ({ ...d, eventType: v }));
@@ -293,9 +291,21 @@ export function Booking() {
                   {errorText('eventType')}
                 </div>
 
-                <div className={`field${err('date') ? ' has-error' : ''}`}>
-                  <label htmlFor="lead-date">Дата</label>
-                  <input {...fieldProps('date')} type="date" min={minDate} value={data.date} onChange={onChange} />
+                <div className={`field field--date-end${err('date') ? ' has-error' : ''}`}>
+                  <label htmlFor="lead-date" id="lead-date-label">
+                    Дата
+                  </label>
+                  <DatePicker
+                    id="lead-date"
+                    labelId="lead-date-label"
+                    name="date"
+                    value={data.date}
+                    placeholder="Выберите дату"
+                    onChange={(v) => update('date', v)}
+                    onBlur={() => onBlur({ target: { name: 'date' } })}
+                    invalid={Boolean(err('date'))}
+                    describedBy={err('date') ? 'lead-date-error' : undefined}
+                  />
                   {errorText('date')}
                 </div>
 

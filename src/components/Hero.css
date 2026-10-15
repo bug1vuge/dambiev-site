@@ -207,8 +207,8 @@
 
 .hero__badge {
   position: absolute;
-  left: -12%;
-  top: 4%; /* в верхнем углу арки — пустая стена, значок не закрывает фигуру */
+  right: -10%;
+  top: 4%; /* в верхнем углу арки — пустая стена, значок не закрывает ни фигуру, ни имя */
   width: clamp(110px, 12vw, 160px);
   height: auto;
   transform: translateZ(40px);
@@ -328,6 +328,7 @@
     margin: 0 auto;
   }
   .hero__badge {
+    right: auto;
     left: -14%;
     top: 0;
     width: 96px;

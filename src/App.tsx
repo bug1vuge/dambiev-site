@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { About } from './components/About';
 import { Benefits } from './components/Benefits';
+import { Booking } from './components/Booking';
 import { Faq } from './components/Faq';
 import { Footer } from './components/Footer';
 import { Formats } from './components/Formats';
@@ -18,6 +19,7 @@ export function App() {
     const stops = [initReveal(), initParallax(), initButtonGlow()];
     return () => stops.forEach((s) => s());
   }, []);
+
   return (
     <>
       <a className="skip-link" href="#main">
@@ -34,6 +36,7 @@ export function App() {
         <Gallery />
         <Reviews />
         <Faq />
+        <Booking />
       </main>
       <Footer />
       <MobileBar />

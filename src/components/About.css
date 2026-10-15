@@ -109,11 +109,14 @@
 
 .about__facts div {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
+  justify-content: flex-start; /* цифры на одной линии, даже если подписи разной длины */
   gap: 0.35rem;
+  min-width: 0;
 }
 
 .about__facts dd {
+  order: -1; /* в разметке dt идёт первым (так требует HTML), визуально цифра сверху */
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
@@ -137,11 +140,23 @@
   }
 }
 
-@media (max-width: 479px) {
+/* Телефон: цифры столбиком — число слева, подпись справа */
+@media (max-width: 599px) {
   .about__facts {
-    gap: 0.6rem;
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+  .about__facts div {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  .about__facts dd {
+    flex: none;
+    min-width: 3.6em;
+    font-size: 2.25rem;
   }
   .about__facts dt {
-    font-size: 0.8125rem;
+    font-size: 0.9375rem;
   }
 }

@@ -11,12 +11,12 @@ export function About() {
         <div className="about__media">
           <div className="about__photo about__photo--main" data-reveal="curtain">
             <div data-parallax="-0.06">
-              <Photo photo="portrait" sizes="(min-width: 1024px) 34vw, (min-width: 600px) 50vw, 80vw" />
+              <Photo photo="welcome" sizes="(min-width: 1024px) 34vw, (min-width: 600px) 50vw, 80vw" />
             </div>
           </div>
           <div className="about__photo about__photo--small" data-reveal="scale" style={{ '--delay': '0.25s' } as CSSProperties}>
             <div data-parallax="0.12">
-              <Photo photo="mic" sizes="(min-width: 1024px) 18vw, 40vw" />
+              <Photo photo="closeup" sizes="(min-width: 1024px) 18vw, 40vw" />
             </div>
           </div>
           <p className="about__note" data-parallax="0.2">

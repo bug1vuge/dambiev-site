@@ -44,7 +44,7 @@ export const contacts = {
  *  - widths — своё фото: файлы /img/<key>-<ширина>.avif|webp, их делает
  *    `npm run images` из /photos-src (ширины там же, в scripts/optimize-images.mjs).
  */
-export type PhotoKey = 'dance' | 'hero' | 'stage' | 'smile' | 'party' | 'portrait' | 'mic';
+export type PhotoKey = 'dance' | 'welcome' | 'closeup' | 'hero' | 'stage' | 'smile' | 'party' | 'portrait' | 'mic';
 
 export interface Photo {
   key: PhotoKey;
@@ -63,6 +63,18 @@ export const photos: Record<PhotoKey, Photo> = {
     widths: [480, 800, 1080],
     alt: 'Ведущий Леонид Дамбиев в смокинге танцует, раскинув руки',
     ratio: 1080 / 1196,
+  },
+  welcome: {
+    key: 'welcome',
+    widths: [360, 720],
+    alt: 'Леонид Дамбиев с улыбкой протягивает руки навстречу',
+    ratio: 1,
+  },
+  closeup: {
+    key: 'closeup',
+    widths: [360, 720],
+    alt: 'Портрет ведущего Леонида Дамбиева в смокинге',
+    ratio: 1,
   },
   hero: {
     key: 'hero',

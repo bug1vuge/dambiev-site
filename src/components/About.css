@@ -12,7 +12,7 @@
 
 .about__media {
   position: relative;
-  padding: 0 12% 18% 0;
+  padding: 1.25rem 10% 16% 0; /* сверху — место для стикера, справа и снизу — для круглого фото */
 }
 
 .about__photo {
@@ -21,7 +21,7 @@
 }
 
 .about__photo .photo {
-  transform: scale(1.12);
+  transform: scale(1.06); /* запас под параллакс без заметной обрезки кадра */
 }
 
 .about__photo--main {
@@ -32,7 +32,7 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 46%;
+  width: 40%;
   border-radius: 999px;
   box-shadow:
     0 0 0 8px var(--butter),
@@ -41,8 +41,8 @@
 
 .about__note {
   position: absolute;
-  left: -0.5rem;
-  top: 8%;
+  left: -0.75rem;
+  top: 0; /* на краю фото, не закрывает лицо */
   padding: 0.85rem 1.2rem;
   border-radius: 18px 18px 18px 4px;
   background: var(--rose);

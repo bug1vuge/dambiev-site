@@ -207,8 +207,8 @@
 
 .hero__badge {
   position: absolute;
-  left: -14%;
-  bottom: 8%;
+  left: -12%;
+  top: 4%; /* в верхнем углу арки — пустая стена, значок не закрывает фигуру */
   width: clamp(110px, 12vw, 160px);
   height: auto;
   transform: translateZ(40px);
@@ -293,24 +293,44 @@
     padding-top: calc(var(--header-h) + 1.75rem);
     padding-bottom: 3.5rem;
   }
+  /* Телефон: имя → фото → текст и кнопки, чтобы фото было на первом экране */
   .hero__grid {
     grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .hero__copy {
+    display: contents;
+  }
+  .hero__title {
+    order: 0;
+  }
+  .hero__visual {
+    order: 1;
+  }
+  .hero__tagline,
+  .hero__lead,
+  .hero__actions,
+  .hero__phone {
+    order: 2;
+  }
+  .hero__tagline {
+    margin-top: 1.5rem;
   }
   .hero__name {
     font-size: clamp(2.9rem, 15vw, 5rem);
   }
   .hero__visual {
     max-width: 320px;
-    margin: 0.5rem auto 0;
-    width: 80%;
+    margin: 1.75rem auto 0;
+    width: 82%;
   }
   .hero__arch {
     margin: 0 auto;
   }
   .hero__badge {
-    left: -22%;
-    bottom: 4%;
-    width: 104px;
+    left: -14%;
+    top: 0;
+    width: 96px;
   }
   .hero__actions .btn {
     flex: 1 1 100%;

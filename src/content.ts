@@ -44,7 +44,7 @@ export const contacts = {
  *  - widths — своё фото: файлы /img/<key>-<ширина>.avif|webp, их делает
  *    `npm run images` из /photos-src (ширины там же, в scripts/optimize-images.mjs).
  */
-export type PhotoKey = 'hero' | 'stage' | 'smile' | 'party' | 'portrait' | 'mic';
+export type PhotoKey = 'dance' | 'hero' | 'stage' | 'smile' | 'party' | 'portrait' | 'mic';
 
 export interface Photo {
   key: PhotoKey;
@@ -58,6 +58,12 @@ export interface Photo {
 }
 
 export const photos: Record<PhotoKey, Photo> = {
+  dance: {
+    key: 'dance',
+    widths: [480, 800, 1080],
+    alt: 'Ведущий Леонид Дамбиев в смокинге танцует, раскинув руки',
+    ratio: 1080 / 1196,
+  },
   hero: {
     key: 'hero',
     tilda: 'tild3235-6666-4930-a366-346437303438/IMG_5802.jpeg',
@@ -343,5 +349,5 @@ export const seo = {
   title: `Ведущий на свадьбу, юбилей и корпоратив${cityPart} — Леонид Дамбиев`,
   description: `Леонид Дамбиев — тёплый и эмоциональный ведущий мероприятий${cityPart}. Свадьбы, юбилеи, корпоративы и выпускные: живой вокал, танцы, сценарий под вас и договор. Забронируйте дату.`,
   keywords: `ведущий на свадьбу${cityPart}, ведущий на юбилей, ведущий корпоратива, тамада${cityPart}, ведущий мероприятий, Леонид Дамбиев`,
-  ogImage: `https://static.tildacdn.info/${photos.hero.tilda!.replace('/', '/-/resize/1200x/')}`,
+  ogImage: `${site.url}/img/dance-og.jpg`,
 };

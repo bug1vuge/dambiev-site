@@ -7,7 +7,7 @@ import { Photo } from './Photo';
 import './Hero.css';
 
 /** Фото первого экрана и его ширина на экране — их же использует предзагрузка в entry-server */
-export const HERO_PHOTO: PhotoKey = 'hero';
+export const HERO_PHOTO: PhotoKey = 'dance';
 export const HERO_SIZES = '(min-width: 1024px) 34vw, (min-width: 600px) 46vw, 78vw';
 
 function Word({ text, offset }: { text: string; offset: number }) {

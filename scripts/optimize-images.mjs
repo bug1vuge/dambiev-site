@@ -16,6 +16,7 @@ import { fileURLToPath } from 'node:url';
 
 const PHOTOS = {
   // ключ: { widths, og?: { width, height, top } — превью для соцсетей в JPEG }
+  dance: { widths: [480, 800, 1080], og: { width: 1200, height: 630, top: 110 } },
 };
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');

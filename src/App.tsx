@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { About } from './components/About';
 import { Benefits } from './components/Benefits';
 import { Formats } from './components/Formats';
+import { Gallery } from './components/Gallery';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Marquee } from './components/Marquee';
@@ -27,6 +28,7 @@ export function App() {
         <Formats />
         <Benefits />
         <Steps />
+        <Gallery />
       </main>
       <MobileBar />
     </>

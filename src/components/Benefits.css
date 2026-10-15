@@ -28,7 +28,7 @@
   box-decoration-break: clone;
 }
 
-.is-in .benefits__mark,
+[data-in] .benefits__mark,
 html:not(.js) .benefits__mark {
   background-size: 100% 100%;
 }

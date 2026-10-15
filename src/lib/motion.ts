@@ -6,11 +6,16 @@ export const prefersReducedMotion = (): boolean =>
 export const isFinePointer = (): boolean =>
   typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-/** Появление блоков: [data-reveal] получает класс .is-in при входе в экран. */
+/**
+ * Появление блоков: [data-reveal] получает атрибут data-in при входе в экран.
+ * Именно атрибут, а не класс: React при перерисовке переписывает className
+ * и стёр бы отметку — блок снова стал бы прозрачным.
+ */
 export function initReveal(): () => void {
   const items = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+  const show = (el: HTMLElement) => el.setAttribute('data-in', '');
   if (!('IntersectionObserver' in window) || prefersReducedMotion()) {
-    items.forEach((el) => el.classList.add('is-in'));
+    items.forEach(show);
     return () => undefined;
   }
   // Элементы с clip-path «невидимы» для IntersectionObserver — следим за их родителем
@@ -19,7 +24,7 @@ export function initReveal(): () => void {
     (entries) => {
       for (const e of entries) {
         if (e.isIntersecting) {
-          (targetFor.get(e.target) ?? (e.target as HTMLElement)).classList.add('is-in');
+          show(targetFor.get(e.target) ?? (e.target as HTMLElement));
           io.unobserve(e.target);
         }
       }

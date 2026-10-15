@@ -312,12 +312,12 @@ p {
   clip-path: inset(100% 0 0 0 round var(--radius-lg));
 }
 
-.js [data-reveal].is-in {
+.js [data-reveal][data-in] {
   opacity: 1;
   transform: none;
 }
 
-.js [data-reveal='curtain'].is-in {
+.js [data-reveal='curtain'][data-in] {
   clip-path: inset(0 0 0 0 round var(--radius-lg));
 }
 

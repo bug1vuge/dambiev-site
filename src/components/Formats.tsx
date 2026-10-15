@@ -30,10 +30,13 @@ export function Formats() {
       preview.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${Math.max(-12, Math.min(12, vx))}deg)`;
       raf = running ? requestAnimationFrame(loop) : 0;
     };
-    const onMove = (e: PointerEvent) => {
+    let lastX = -1;
+    let lastY = -1;
+
+    const follow = (clientX: number, clientY: number) => {
       const r = list.getBoundingClientRect();
-      tx = e.clientX - r.left;
-      ty = e.clientY - r.top;
+      tx = clientX - r.left;
+      ty = clientY - r.top;
       if (!running) {
         x = tx;
         y = ty;
@@ -41,16 +44,37 @@ export function Formats() {
         raf = requestAnimationFrame(loop);
       }
     };
-    const onLeave = () => {
+    const hide = () => {
       running = false;
       setActive(null);
     };
+    const onMove = (e: PointerEvent) => {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      follow(e.clientX, e.clientY);
+    };
+    // При прокрутке колесом курсор не двигается, и pointerleave не приходит.
+    // Проверяем, что теперь под курсором: другая строка — меняем фото, вне списка — прячем.
+    const onScroll = () => {
+      if (!running || lastX < 0) return;
+      const under = document.elementFromPoint(lastX, lastY);
+      const item = under?.closest<HTMLElement>('.formats__item');
+      if (!item || !list.contains(item)) {
+        hide();
+        return;
+      }
+      const index = Array.from(list.querySelectorAll('.formats__item')).indexOf(item);
+      setActive(index);
+      follow(lastX, lastY);
+    };
     list.addEventListener('pointermove', onMove, { passive: true });
-    list.addEventListener('pointerleave', onLeave);
+    list.addEventListener('pointerleave', hide);
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
       cancelAnimationFrame(raf);
       list.removeEventListener('pointermove', onMove);
-      list.removeEventListener('pointerleave', onLeave);
+      list.removeEventListener('pointerleave', hide);
+      window.removeEventListener('scroll', onScroll);
     };
   }, []);
 

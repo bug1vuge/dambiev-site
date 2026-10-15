@@ -1,10 +1,14 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
-import { contacts, hero, person, site } from '../content';
+import { contacts, hero, person, site, type PhotoKey } from '../content';
 import { createMirrorBall } from '../lib/mirrorball';
 import { isFinePointer, prefersReducedMotion } from '../lib/motion';
 import { WhatsAppIcon } from './Icons';
 import { Photo } from './Photo';
 import './Hero.css';
+
+/** Фото первого экрана и его ширина на экране — их же использует предзагрузка в entry-server */
+export const HERO_PHOTO: PhotoKey = 'hero';
+export const HERO_SIZES = '(min-width: 1024px) 34vw, (min-width: 600px) 46vw, 78vw';
 
 function Word({ text, offset }: { text: string; offset: number }) {
   return (
@@ -155,7 +159,7 @@ export function Hero() {
 
         <div className="hero__visual">
           <div ref={archRef} className="hero__arch">
-            <Photo photo="hero" priority sizes="(min-width: 1024px) 34vw, (min-width: 600px) 46vw, 78vw" />
+            <Photo photo={HERO_PHOTO} priority sizes={HERO_SIZES} />
             <svg className="hero__badge" viewBox="0 0 200 200" aria-hidden="true">
               <defs>
                 <path id="badge-circle" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />

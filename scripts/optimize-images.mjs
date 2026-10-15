@@ -1,41 +1,52 @@
 /**
- * Оптимизация фото: кладёте исходники в /photos-src с именами
- *   hero.jpg, stage.jpg, smile.jpg, party.jpg, portrait.jpg, mic.jpg
- * и запускаете `npm run images`. Скрипт сделает AVIF + WebP шириной
- * 480/800/1200 px в /public/img. Затем в src/content.ts поставьте localPhotos = true.
+ * Оптимизация своих фото: исходники лежат в /photos-src (в git не попадают),
+ * готовые AVIF + WebP — в /public/img/<key>-<ширина>.<ext>.
+ *
+ *   npm run images
+ *
+ * Кадрирование и ретушь делаются заранее, скрипт сохраняет пропорции исходника.
+ * Ширины должны совпадать с полем widths у фото в src/content.ts.
+ * Ширина больше исходника — это аккуратное увеличение для экранов с высокой
+ * плотностью пикселей (Lanczos + лёгкая резкость), а не новые детали.
  */
 import sharp from 'sharp';
 import { mkdir, readdir } from 'node:fs/promises';
-import { dirname, extname, basename, resolve } from 'node:path';
+import { basename, dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+const PHOTOS = {
+  // ключ: { widths, og?: { width, height, top } — превью для соцсетей в JPEG }
+};
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const src = resolve(root, 'photos-src');
 const out = resolve(root, 'public/img');
-const WIDTHS = [480, 800, 1200];
-const KEYS = new Set(['hero', 'stage', 'smile', 'party', 'portrait', 'mic']);
 
 await mkdir(out, { recursive: true });
-const files = (await readdir(src)).filter((f) => /\.(jpe?g|png|webp|heic|tiff?)$/i.test(f));
-if (!files.length) {
-  console.error('В папке photos-src нет фото. Положите туда hero.jpg, stage.jpg и т. д.');
-  process.exit(1);
-}
+const files = (await readdir(src)).filter((f) => /\.(jpe?g|png|webp|tiff?)$/i.test(f));
 
-for (const file of files) {
-  const key = basename(file, extname(file)).toLowerCase();
-  if (!KEYS.has(key)) {
-    console.warn(`Пропускаю ${file}: имя должно быть одним из ${[...KEYS].join(', ')}`);
+for (const [key, cfg] of Object.entries(PHOTOS)) {
+  const file = files.find((f) => basename(f, extname(f)).toLowerCase() === key);
+  if (!file) {
+    console.error(`Нет исходника для «${key}» в photos-src`);
+    process.exitCode = 1;
     continue;
   }
-  for (const w of WIDTHS) {
-    // Кадрируем в 3:4 по центру внимания — так фото одинаково смотрятся в арках и галерее
-    const pipeline = sharp(resolve(src, file))
-      .rotate()
-      .resize({ width: w, height: Math.round((w * 4) / 3), fit: 'cover', position: sharp.strategy.attention });
-    await pipeline.clone().avif({ quality: 52, effort: 6 }).toFile(resolve(out, `${key}-${w}.avif`));
-    await pipeline.clone().webp({ quality: 74 }).toFile(resolve(out, `${key}-${w}.webp`));
+  const input = resolve(src, file);
+  const { width: srcWidth } = await sharp(input).metadata();
+  for (const w of cfg.widths) {
+    const pipeline = sharp(input).rotate().resize({ width: w, kernel: 'lanczos3' });
+    if (w > srcWidth) pipeline.sharpen({ sigma: 0.6 });
+    await pipeline.clone().avif({ quality: 55, effort: 6 }).toFile(resolve(out, `${key}-${w}.avif`));
+    await pipeline.clone().webp({ quality: 78 }).toFile(resolve(out, `${key}-${w}.webp`));
   }
-  console.log(`✓ ${key}`);
+  if (cfg.og) {
+    const { width, height, top } = cfg.og;
+    await sharp(input)
+      .resize({ width })
+      .extract({ left: 0, top, width, height })
+      .jpeg({ quality: 82, mozjpeg: true })
+      .toFile(resolve(out, `${key}-og.jpg`));
+  }
+  console.log(`✓ ${key}: ${cfg.widths.join(', ')}${cfg.og ? ' + og' : ''}`);
 }
-console.log('Готово. Поставьте localPhotos = true в src/content.ts');

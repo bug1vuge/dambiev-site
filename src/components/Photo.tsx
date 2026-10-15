@@ -1,18 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { localPhotos, photos, type PhotoKey } from '../content';
-
-const WIDTHS = [480, 800, 1200] as const;
-
-function tildaUrl(path: string, width: number): string {
-  const [dir, file] = path.split('/');
-  return `https://static.tildacdn.info/${dir}/-/resize/${width}x/${file}`;
-}
-
-function srcSet(key: PhotoKey, format: 'avif' | 'webp' | 'remote'): string {
-  return WIDTHS.map((w) =>
-    format === 'remote' ? `${tildaUrl(photos[key].tilda, w)} ${w}w` : `${import.meta.env.BASE_URL}img/${key}-${w}.${format} ${w}w`,
-  ).join(', ');
-}
+import { photos, type PhotoKey } from '../content';
+import { photoUrls } from '../lib/photoSrc';
 
 interface PhotoProps {
   photo: PhotoKey;
@@ -31,6 +19,7 @@ interface PhotoProps {
  */
 export function Photo({ photo, sizes, className, priority = false, alt }: PhotoProps) {
   const data = photos[photo];
+  const urls = photoUrls(photo);
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -63,13 +52,13 @@ export function Photo({ photo, sizes, className, priority = false, alt }: PhotoP
         )
       ) : (
         <picture>
-          {localPhotos && <source type="image/avif" srcSet={srcSet(photo, 'avif')} sizes={sizes} />}
-          {localPhotos && <source type="image/webp" srcSet={srcSet(photo, 'webp')} sizes={sizes} />}
+          {urls.avif && <source type="image/avif" srcSet={urls.avif} sizes={sizes} />}
+          {urls.webp && <source type="image/webp" srcSet={urls.webp} sizes={sizes} />}
           <img
             ref={imgRef}
-            src={localPhotos ? `${import.meta.env.BASE_URL}img/${photo}-800.webp` : tildaUrl(data.tilda, 800)}
-            srcSet={localPhotos ? undefined : srcSet(photo, 'remote')}
-            sizes={localPhotos ? undefined : sizes}
+            src={urls.src}
+            srcSet={urls.srcSet}
+            sizes={urls.srcSet ? sizes : undefined}
             alt={alt ?? data.alt}
             width={width}
             height={height}

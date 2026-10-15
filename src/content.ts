@@ -39,20 +39,21 @@ export const contacts = {
 };
 
 /* ─────────────── Фото ───────────────
- * Сейчас берутся с CDN Тильды (старый сайт). После `npm run images`
- * (см. README) переключите `localPhotos` на true — подтянутся
- * оптимизированные AVIF/WebP из /public/img.
+ * Источник задаётся для каждого фото отдельно:
+ *  - tilda — картинка со старого сайта на CDN Тильды;
+ *  - widths — своё фото: файлы /img/<key>-<ширина>.avif|webp, их делает
+ *    `npm run images` из /photos-src (ширины там же, в scripts/optimize-images.mjs).
  */
-export const localPhotos = false;
-
 export type PhotoKey = 'hero' | 'stage' | 'smile' | 'party' | 'portrait' | 'mic';
 
 export interface Photo {
   key: PhotoKey;
   /** Путь на CDN Тильды: «tildXXXX-…/ИМЯ.jpeg» */
-  tilda: string;
+  tilda?: string;
+  /** Ширины локальных файлов, по возрастанию */
+  widths?: number[];
   alt: string;
-  /** Пропорции исходника (ширина / высота) — чтобы не было скачков вёрстки. */
+  /** Пропорции кадра (ширина / высота) — чтобы не было скачков вёрстки. */
   ratio: number;
 }
 
@@ -342,5 +343,5 @@ export const seo = {
   title: `Ведущий на свадьбу, юбилей и корпоратив${cityPart} — Леонид Дамбиев`,
   description: `Леонид Дамбиев — тёплый и эмоциональный ведущий мероприятий${cityPart}. Свадьбы, юбилеи, корпоративы и выпускные: живой вокал, танцы, сценарий под вас и договор. Забронируйте дату.`,
   keywords: `ведущий на свадьбу${cityPart}, ведущий на юбилей, ведущий корпоратива, тамада${cityPart}, ведущий мероприятий, Леонид Дамбиев`,
-  ogImage: `https://static.tildacdn.info/${photos.hero.tilda.replace('/', '/-/resize/1200x/')}`,
+  ogImage: `https://static.tildacdn.info/${photos.hero.tilda!.replace('/', '/-/resize/1200x/')}`,
 };
